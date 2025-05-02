@@ -1,0 +1,39 @@
+# 多模态恶意软件检测模型配置文件
+
+# 输出目录
+output_dir: "output_multimodal"
+
+# 数据集路径
+benign_dir: "data/benign"     # 良性样本目录
+malware_dir: "data/malware"   # 恶意样本目录
+
+# 如果已有处理好的特征文件，可以直接使用
+features_path: ""  # 留空表示从原始文件提取特征
+api_sequence_path: ""  # API序列路径
+byte_sequence_path: ""  # 字节序列路径
+image_path: ""  # 图像特征路径
+
+# 数据处理参数
+sample_limit: 1000  # 每类样本的最大数量限制，留空表示使用所有样本
+n_jobs: 4          # 并行处理线程数
+test_size: 0.2     # 测试集比例
+random_state: 42   # 随机种子
+top_features: 500  # 互信息特征选择保留的特征数量
+
+# 多模态特征配置
+use_byte_sequence: true   # 是否使用字节序列特征
+use_image: true          # 是否使用图像特征
+byte_sequence_max_length: 2048  # 字节序列最大长度
+image_width: 32          # 图像宽度
+image_max_bytes: 4096    # 图像最大字节数
+
+# 深度学习模型参数
+embedding_dim: 64       # 嵌入层维度
+hidden_dim: 128        # 隐藏层维度
+lstm_layers: 2         # LSTM层数
+fc_hidden: [256, 128]  # 全连接层维度
+dropout: 0.3          # Dropout比例
+learning_rate: 0.001   # 学习率
+batch_size: 64        # 批次大小
+epochs: 50            # 训练轮数
+swa_start: 30         # SWA开始轮数 
