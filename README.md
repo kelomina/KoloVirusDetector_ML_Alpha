@@ -140,6 +140,60 @@ python malware_detector.py --model-type deep predict --model output/deep_malware
 - `--no-byte-seq`：不使用字节序列特征
 - `--no-image`：不使用图像特征
 
+## 使用集成模型
+
+本项目支持同时训练LightGBM和深度学习模型，并在预测时使用模型集成来提高检测性能。
+
+### 集成模型训练
+
+使用以下命令训练集成模型：
+
+```bash
+python malware_detector.py --model-type ensemble train --config config_ensemble.yaml
+```
+
+这将：
+1. 同时训练LightGBM和深度学习模型
+2. 创建一个集成模型，结合两种模型的优势
+3. 评估每个单独模型和集成模型的性能
+
+训练完成后，在`output/ensemble`目录（或配置文件中指定的输出目录）下将生成以下文件：
+- `lgbm_malware_detector.pkl` - LightGBM模型
+- `deep_malware_detector.pt` - 深度学习模型
+- `deep_malware_detector_swa.pt` - 随机权重平均(SWA)深度学习模型
+- `ensemble_malware_detector.pkl` - 集成模型配置
+- `feature_engineer.pkl` - 特征工程器
+- `feature_importance.csv` - LightGBM特征重要性
+
+### 集成模型预测
+
+使用以下命令使用集成模型进行预测：
+
+```bash
+python malware_detector.py --model-type ensemble predict \
+  --model output/ensemble/ensemble_malware_detector.pkl \
+  --feature-engineer output/ensemble/feature_engineer.pkl \
+  --lgbm-model output/ensemble/lgbm_malware_detector.pkl \
+  --deep-model output/ensemble/deep_malware_detector.pt \
+  --swa-model output/ensemble/deep_malware_detector_swa.pt \
+  --file path/to/suspicious/file.exe
+```
+
+预测结果将显示：
+1. 整体集成预测结果和概率
+2. LightGBM模型的单独预测概率 
+3. 深度学习模型的单独预测概率
+
+通过观察两个模型的预测差异，可以更好地理解检测结果的可靠性。
+
+### 集成模型配置
+
+集成模型的配置可以在`config_ensemble.yaml`文件中进行调整。主要配置项包括：
+
+- `ensemble_weights`: 模型权重，格式为`[深度学习权重, LightGBM权重]`，默认为`[0.6, 0.4]`
+- 每个单独模型的详细参数配置
+- 多模态特征的相关设置
+
 ## 性能指标
 
 该模型在PE恶意软件检测任务上展现出优异的性能：
