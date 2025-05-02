@@ -1,0 +1,70 @@
+# Python 编译文件和缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.py~*
+*.log
+*.pot
+*.pyc
+*.db
+*.sqlite3
+
+# 虚拟环境
+venv/
+env/
+.env/
+virtualenv/
+
+# IDE 和编辑器配置文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter Notebook 缓存
+.ipynb_checkpoints
+
+# OS 生成的文件
+.DS_Store
+Thumbs.db
+
+# 构建和发布产物
+dist/
+build/
+*.egg-info/
+*.egg
+*.so
+
+# 日志和测试输出
+logs/
+tmp/
+temp/
+coverage/
+htmlcov/
+.pytest_cache/
+__pycache__/
+
+# 大文件或敏感数据（不要提交到仓库中）
+*.csv
+*.log
+*.dat
+*.bin
+*.pth
+*.pt
+*.h5
+*.weights
+*.jsonl
+*.tar.gz
+
+# 可选：如果你使用 Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 可选：模型输出文件夹
+models/output/
+models/checkpoints/
