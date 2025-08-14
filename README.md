@@ -1,4 +1,4 @@
-#本仓库以合并至KoloVirusDetector_ML仓库！
+# 本仓库已合并至KoloVirusDetector_ML仓库！
 
 
 # 恶意软件检测模型
